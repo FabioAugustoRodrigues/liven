@@ -15,4 +15,9 @@ class UserRepository extends AbstractRepository
     {
         return $this->model->where('email', $email)->first();
     }
+
+    public function getByCpf(string $cpf)
+    {
+        return $this->model->where('cpf', $cpf)->first();
+    }
 }
