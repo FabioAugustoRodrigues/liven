@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Resources\User\UserResource;
 use App\Services\UserService;
 
 class UserController extends BaseController
@@ -21,7 +22,7 @@ class UserController extends BaseController
 
         return $this->sendResponse(
             [
-                "user" => $user
+                "user" => new UserResource($user)
             ],
             "User created successfully!",
             201
