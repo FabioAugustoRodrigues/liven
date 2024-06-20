@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController;
+use App\Http\Requests\User\CreateUserRequest;
 use App\Services\UserService;
-use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
@@ -15,9 +15,9 @@ class UserController extends BaseController
         $this->userService = $userService;
     }
 
-    public function create(Request $request)
+    public function create(CreateUserRequest $request)
     {
-        $user = $this->userService->create($request->input());
+        $user = $this->userService->create($request->validated());
 
         return $this->sendResponse(
             [
