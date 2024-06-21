@@ -36,6 +36,13 @@ class UserService
         return $this->userRepository->update($id, $data);
     }
 
+    public function delete(int $id)
+    {
+        $user = $this->findUserOrFail($id);
+
+        $this->userRepository->delete($id);
+    }
+
     private function validateUserAttributes(array $data, $existingUser = null)
     {
         if (!empty($data['email'])) {

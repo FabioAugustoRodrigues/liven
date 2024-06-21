@@ -59,6 +59,19 @@ class UserController extends BaseController
         );
     }
 
+    public function delete()
+    {
+        $user = auth()->user();
+
+        $this->userService->delete($user->id);
+
+        return $this->sendResponse(
+            "",
+            "User deleted successfully!",
+            200
+        );
+    }
+
     private function sendAuthenticatedUserResponse($user, $credentials, $message = "", $statusCode = 200)
     {
         $tokenData = $this->authService->login($credentials);
