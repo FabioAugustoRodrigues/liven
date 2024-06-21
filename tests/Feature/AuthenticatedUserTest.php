@@ -43,4 +43,15 @@ class AuthenticatedUserTest extends FeatureBase
                 'message' => 'User updated successfully!',
             ]);
     }
+
+    public function test_authenticated_user_delete()
+    {
+        $response = $this->actingAsUser()->deleteJson('/api/users/me');
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => 'User deleted successfully!',
+            ]);
+    }
 }
