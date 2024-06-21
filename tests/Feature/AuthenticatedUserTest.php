@@ -47,4 +47,36 @@ class AuthenticatedUserTest extends TestCase
                 'message' => 'Unauthenticated.',
             ]);
     }
+
+    public function test_authenticated_user_update()
+    {
+        $user = User::factory()->create([
+            'name' => 'Example name',
+            'email' => 'email@example.com',
+            'password' => 'examplepassword123'
+        ]);
+
+        $credentials = [
+            'email' => 'email@example.com',
+            'password' => 'examplepassword123',
+        ];
+
+        $response = $this->postJson('/api/users/login', $credentials);
+
+        $token = $response->json('data.access_token');
+
+        $updateData = [
+            'name' => 'Neww example name'
+        ];
+
+        $updateResponse = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->putJson('/api/users/me', $updateData);
+
+        $updateResponse->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => 'User updated successfully!',
+            ]);
+    }
 }
