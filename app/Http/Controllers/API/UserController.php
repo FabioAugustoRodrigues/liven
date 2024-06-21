@@ -26,13 +26,7 @@ class UserController extends BaseController
     {
         $user = $this->userService->create($request->validated());
 
-        return $this->sendResponse(
-            [
-                "user" => new UserResource($user)
-            ],
-            "User created successfully!",
-            201
-        );
+        return $this->sendAuthenticatedUserResponse($user, $request->only(['email', 'password']), "User created successfully!", 201);
     }
 
     public function login(LoginUserRequest $request)
@@ -41,6 +35,22 @@ class UserController extends BaseController
             $this->authService->login($request->validated()),
             "User logged in successfully!",
             200
+        );
+    }
+
+    private function sendAuthenticatedUserResponse($user, $credentials, $message = "", $statusCode = 200)
+    {
+        $tokenData = $this->authService->login($credentials);
+
+        return $this->sendResponse(
+            [
+                "user" => new UserResource($user),
+                "access_token" => $tokenData['access_token'],
+                "token_type" => $tokenData['token_type'],
+                "expires_in" => $tokenData['expires_in'],
+            ],
+            $message,
+            $statusCode
         );
     }
 }

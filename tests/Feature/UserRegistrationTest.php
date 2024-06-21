@@ -26,10 +26,7 @@ class UserRegistrationTest extends TestCase
         $response->assertStatus(201)
             ->assertJson([
                 'success' => true,
-                'message' => 'User created successfully!',
-                'data' => [
-                    'user' => []
-                ]
+                'message' => 'User created successfully!'
             ]);
     }
 
