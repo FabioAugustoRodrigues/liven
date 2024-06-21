@@ -20,14 +20,32 @@ class UserService
 
     public function create(array $data)
     {
-        $existingUserByEmail = $this->userRepository->getByEmail($data['email']);
-        if ($existingUserByEmail) {
-            throw new DomainException(['E-mail is already in use'], 409);
+        $data = $this->validateUserAttributes($data);
+
+        return $this->userRepository->create($data);
+    }
+
+    public function update(int $id, array $data)
+    {
+        $user = $this->userRepository->getById($id);
+
+        $data = $this->validateUserAttributes($data, $user);
+
+        return $this->userRepository->update($id, $data);
+    }
+
+    private function validateUserAttributes(array $data, $existingUser = null)
+    {
+        if (!empty($data['email'])) {
+            $existingUserByEmail = $this->userRepository->getByEmail($data['email']);
+            if ($existingUserByEmail && (!$existingUser || $existingUser->email !== $data['email'])) {
+                throw new DomainException(['E-mail is already in use'], 409);
+            }
         }
 
         if (!empty($data['cpf'])) {
             $existingUserByCpf = $this->userRepository->getByCpf($data['cpf']);
-            if ($existingUserByCpf) {
+            if ($existingUserByCpf && (!$existingUser || $existingUser->cpf !== $data['cpf'])) {
                 throw new DomainException(['CPF is already in use'], 409);
             }
 
@@ -36,10 +54,10 @@ class UserService
             }
         }
 
-        $data['password'] = Hash::make($data['password']);
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
 
-        $user = $this->userRepository->create($data);
-
-        return $user;
+        return $data;
     }
 }

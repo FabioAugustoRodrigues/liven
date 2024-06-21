@@ -8,4 +8,5 @@ Route::post('users/login', [UserController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('users/me', [UserController::class, 'me']);
+    Route::put('users/me', [UserController::class, 'update']);
 });

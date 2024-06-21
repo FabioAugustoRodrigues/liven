@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\LoginUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserResource;
 use App\Services\AuthService;
 use App\Services\UserService;
@@ -43,6 +44,17 @@ class UserController extends BaseController
         return $this->sendResponse(
             new UserResource(auth()->user()),
             "User data retrieved successfully",
+            200
+        );
+    }
+
+    public function update(UpdateUserRequest $updateUserRequest)
+    {
+        $user = auth()->user();
+
+        return $this->sendResponse(
+            new UserResource($this->userService->update($user->id, $updateUserRequest->validated())),
+            "User updated successfully!",
             200
         );
     }
