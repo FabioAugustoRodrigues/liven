@@ -4,12 +4,14 @@ namespace App\Services;
 
 use App\Exceptions\DomainException;
 use App\Repositories\UserRepository;
+use App\Traits\Finders\UserFinder;
 use App\Traits\Validations\CpfValidator;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
     use CpfValidator;
+    use UserFinder;
 
     private $userRepository;
 
@@ -27,7 +29,7 @@ class UserService
 
     public function update(int $id, array $data)
     {
-        $user = $this->userRepository->getById($id);
+        $user = $this->findUserOrFail($id);
 
         $data = $this->validateUserAttributes($data, $user);
 
