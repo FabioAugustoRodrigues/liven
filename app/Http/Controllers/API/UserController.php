@@ -38,6 +38,15 @@ class UserController extends BaseController
         );
     }
 
+    public function me()
+    {
+        return $this->sendResponse(
+            new UserResource(auth()->user()),
+            "User data retrieved successfully",
+            200
+        );
+    }
+
     private function sendAuthenticatedUserResponse($user, $credentials, $message = "", $statusCode = 200)
     {
         $tokenData = $this->authService->login($credentials);
