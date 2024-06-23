@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\Address\CreateAddressRequest;
+use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\Address\AddressCollection;
 use App\Http\Resources\Address\AddressResource;
 use App\Services\AddressService;
@@ -29,6 +30,15 @@ class AddressController extends BaseController
             new AddressResource($this->addressService->create($data)),
             "Address created successfully!",
             201
+        );
+    }
+
+    public function update(UpdateAddressRequest $updateAddressRequest, $id)
+    {
+        return $this->sendResponse(
+            new AddressResource($this->addressService->update($id, $updateAddressRequest->validated())),
+            "Address updated successfully!",
+            200
         );
     }
 

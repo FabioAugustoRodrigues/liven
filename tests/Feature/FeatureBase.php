@@ -20,4 +20,11 @@ class FeatureBase extends TestCase
 
         return $this->actingAs($user);
     }
+
+    protected function actingAsExistingUser()
+    {
+        $user = User::where('email', 'email@example.com')->firstOrFail();
+
+        return $this->actingAs($user);
+    }
 }
