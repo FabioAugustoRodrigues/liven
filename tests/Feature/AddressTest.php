@@ -26,4 +26,15 @@ class AddressTest extends FeatureBase
                 'message' => 'Address created successfully!',
             ]);
     }
+
+    public function test_get_all_adresses_by_user()
+    {
+        $response = $this->actingAsUser()->getJson('/api/users/me/adresses');
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => 'Adresses retrieved successfully!',
+            ]);
+    }
 }

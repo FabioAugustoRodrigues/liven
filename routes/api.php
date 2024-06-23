@@ -13,4 +13,5 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('users/me', [UserController::class, 'delete']);
 
     Route::post('users/me/adresses', [AddressController::class, 'create']);
+    Route::get('users/me/adresses', [AddressController::class, 'getAllByUser']);
 });

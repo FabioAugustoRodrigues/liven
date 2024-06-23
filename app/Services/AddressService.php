@@ -18,4 +18,8 @@ class AddressService
         return $this->addressRepository->create($data);
     }
 
+    public function getAllByUser(int $user_id)
+    {
+        return $this->addressRepository->getAllByUser($user_id);
+    }
 }
