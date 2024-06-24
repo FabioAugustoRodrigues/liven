@@ -8,7 +8,9 @@ use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\Address\AddressCollection;
 use App\Http\Resources\Address\AddressResource;
 use App\Authorization\AddressAuthorization;
+use App\Http\Filters\Address\GetAllAdressesFilter;
 use App\Services\AddressService;
+use Illuminate\Http\Request;
 
 class AddressController extends BaseController
 {
@@ -53,12 +55,12 @@ class AddressController extends BaseController
         );
     }
 
-    public function getAllByUser()
+    public function getAllByUser(Request $request)
     {
         $user = auth()->user();
 
         return $this->sendResponse(
-            new AddressCollection($this->addressService->getAllByUser($user->id)),
+            new AddressCollection($this->addressService->getAllByUser($user->id, GetAllAdressesFilter::getFilter($request))),
             "Adresses retrieved successfully!",
             200
         );

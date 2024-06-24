@@ -28,8 +28,8 @@ class AddressService
         return $this->addressRepository->update($id, $data);
     }
 
-    public function getAllByUser(int $user_id)
+    public function getAllByUser(int $user_id, array $filterParams = [])
     {
-        return $this->addressRepository->getAllByUser($user_id);
+        return $this->addressRepository->getAllByUser($user_id, $filterParams);
     }
 }
