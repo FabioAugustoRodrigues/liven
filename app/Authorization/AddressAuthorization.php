@@ -22,4 +22,16 @@ class AddressAuthorization
 
         return true;
     }
+
+    public function userCanDelete(int $user_id, int $address_id): bool
+    {
+        $user = $this->findUserOrFail($user_id);
+        $address = $this->findAddressOrFail($address_id);
+
+        if ($user->id !== $address->user_id) {
+            throw new DomainException(["Permission denied to delete address."], 403);
+        }
+
+        return true;
+    }
 }

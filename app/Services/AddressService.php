@@ -32,4 +32,11 @@ class AddressService
     {
         return $this->addressRepository->getAllByUser($user_id, $filterParams);
     }
+
+    public function delete(int $id)
+    {
+        $address = $this->findAddressOrFail($id);
+
+        $this->addressRepository->delete($id);
+    }
 }

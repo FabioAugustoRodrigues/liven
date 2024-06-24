@@ -65,4 +65,19 @@ class AddressController extends BaseController
             200
         );
     }
+
+    public function delete($id)
+    {
+        $user = auth()->user();
+
+        $this->addressAuthorization->userCanDelete($user->id, $id);
+
+        $this->addressService->delete($id);
+
+        return $this->sendResponse(
+            "",
+            "Address deleted successfully!",
+            200
+        );
+    }
 }
