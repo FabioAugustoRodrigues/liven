@@ -66,6 +66,19 @@ class AddressController extends BaseController
         );
     }
 
+    public function getById($id)
+    {
+        $user = auth()->user();
+
+        $this->addressAuthorization->userCanGet($user->id, $id);
+
+        return $this->sendResponse(
+            new AddressResource($this->addressService->getById($id)),
+            "Address retrieved successfully!",
+            200
+        );
+    }
+
     public function delete($id)
     {
         $user = auth()->user();
