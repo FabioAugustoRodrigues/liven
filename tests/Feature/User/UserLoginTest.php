@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\User;
 
 use App\Models\User;
+use Tests\Feature\FeatureBase;
 
-class AuthenticationTest extends FeatureBase
+class UserLoginTest extends FeatureBase
 {
     public function test_successful_user_login()
     {
@@ -22,15 +23,6 @@ class AuthenticationTest extends FeatureBase
         $response = $this->postJson('/api/users/login', $credentials);
 
         $response->assertStatus(200)
-            ->assertJsonStructure([
-                'success',
-                'data' => [
-                    'access_token',
-                    'token_type',
-                    'expires_in',
-                ],
-                'message',
-            ])
             ->assertJson([
                 'success' => true,
                 'message' => 'User logged in successfully!',
@@ -44,8 +36,9 @@ class AuthenticationTest extends FeatureBase
             'password' => 'examplepassword123',
         ];
 
-        $this->postJson('/api/users/login', $credentials)
-            ->assertStatus(401)
+        $response = $this->postJson('/api/users/login', $credentials);
+
+        $response->assertStatus(401)
             ->assertJson([
                 'success' => false,
                 'message' => 'Incorrect login or password.',

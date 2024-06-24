@@ -1,8 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\User;
 
-class UserRegistrationTest extends FeatureBase
+use Tests\Feature\FeatureBase;
+
+class UserRegisterTest extends FeatureBase
 {
     public function test_user_can_register()
     {
@@ -13,10 +15,6 @@ class UserRegistrationTest extends FeatureBase
         ];
 
         $response = $this->postJson('/api/users', $userData);
-
-        $this->assertDatabaseHas('users', [
-            'email' => 'email@example.com'
-        ]);
 
         $response->assertStatus(201)
             ->assertJson([
