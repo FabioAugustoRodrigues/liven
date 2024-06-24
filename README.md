@@ -60,4 +60,5 @@ Para executar o projeto utilize o seguinte comando para iniciar o servidor de de
 ### Testes automatizados
 - Faça uma cópia do arquivo `.env` para `.env.testing`
 - Insira as informações do banco de dados de <b>teste</b> no arquivo `.env.testing`, incluindo o nome do banco de dados, usuário e senha.
+- Execute o comando ```php artisan migrate --env=testing``` para gerar as migrações no banco de teste.
 - Execute o comando ```php artisan test``` para ter o overview dos testes.
