@@ -7,16 +7,23 @@ use App\Http\Requests\Address\CreateAddressRequest;
 use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\Address\AddressCollection;
 use App\Http\Resources\Address\AddressResource;
+use App\Authorization\AddressAuthorization;
 use App\Services\AddressService;
 
 class AddressController extends BaseController
 {
     protected $addressService;
 
+    protected $addressAuthorization;
+
     public function __construct(
-        AddressService $addressService
+        AddressService $addressService,
+
+        AddressAuthorization $addressAuthorization
     ) {
         $this->addressService = $addressService;
+
+        $this->addressAuthorization = $addressAuthorization;
     }
 
     public function create(CreateAddressRequest $request)
@@ -35,6 +42,10 @@ class AddressController extends BaseController
 
     public function update(UpdateAddressRequest $updateAddressRequest, $id)
     {
+        $user = auth()->user();
+
+        $this->addressAuthorization->userCanUpdate($user->id, $id);
+
         return $this->sendResponse(
             new AddressResource($this->addressService->update($id, $updateAddressRequest->validated())),
             "Address updated successfully!",
