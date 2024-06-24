@@ -2,12 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
 class AuthenticatedUserTest extends FeatureBase
 {
-    use RefreshDatabase;
-
     public function test_authenticated_user_data_retrieval()
     {
         $response = $this->actingAsUser()->getJson('/api/users/me');

@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthenticationTest extends FeatureBase
 {
-    use RefreshDatabase;
-
     public function test_successful_user_login()
     {
         $user = User::factory()->create([

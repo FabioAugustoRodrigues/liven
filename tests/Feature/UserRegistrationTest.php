@@ -2,12 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
 class UserRegistrationTest extends FeatureBase
 {
-    use RefreshDatabase;
-
     public function test_user_can_register()
     {
         $userData = [

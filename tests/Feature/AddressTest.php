@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddressTest extends FeatureBase
 {
-    use RefreshDatabase;
-
     public function test_create_address()
     {
         $addressData = [
